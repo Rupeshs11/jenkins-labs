@@ -1,0 +1,59 @@
+@Library("shared") _
+pipeline {
+
+    agent { label 'knox' }
+
+    stages {
+        stage("Hello"){
+            steps{
+                script{
+                    hello()
+                }
+            }
+        }
+
+        stage('Code') {
+            steps {
+                script{
+                    clone("https://github.com/Rupesh-knox/django-notes-app.git", "main")
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script{
+                echo "Building Docker image"
+                docker_build("notes-app","latest","rupeshs11")
+                }
+            }
+        }
+
+        stage('Push to DockerHub') {
+            steps {
+                script{
+                    docker_push("notes-app","latest","rupeshs11")
+                }
+    
+                }
+            
+        }
+
+        stage('Test') {
+            steps {
+                echo "Running test container"
+                sh """
+                docker stop notes-test || true
+                docker rm notes-test || true
+                docker run -d -p 8000:8000 --name notes-test rupeshs11/notes-app:latest
+                """
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deployment Successful"
+            }
+        }
+    }
+}
