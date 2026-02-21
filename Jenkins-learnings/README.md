@@ -108,7 +108,3 @@ Jenkins-learnings/
 | Safe Restart             | `http://your-jenkins-url:8080/safeRestart`               |
 
 ---
-
-## 📝 Author
-
-**Rupesh** — Jenkins Learning Notes
