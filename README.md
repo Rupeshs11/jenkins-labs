@@ -98,7 +98,4 @@ pipeline {
 
 ---
 
-## 📝 Author
 
-**Rupesh**
-_DevOps Learning & Practical CI/CD Implementations_
